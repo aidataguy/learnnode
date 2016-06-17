@@ -1,0 +1,20 @@
+{
+  "name": "myblog",
+  "version": "1.0.1",
+  "description": "My Blog",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "blogspirit"
+  ],
+  "author": "Himanshu Patel",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "ejs": "^2.4.2",
+    "express": "^4.14.0",
+    "mongoose": "^4.5.0"
+  }
+}
