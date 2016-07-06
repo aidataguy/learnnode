@@ -20,6 +20,7 @@ app.use(require("express-session")({
 app.use(passport.initialize());
 app.use(passport.session());
 
+passport.use(new localstrat(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -27,7 +28,8 @@ passport.deserializeUser(User.deserializeUser());
 app.get('/', function(req, res) {
     res.render("home");
 });
-app.get('/secret', function(req, res) {
+// SECRET ROUTE
+app.get('/secret', isLoggedIn, function(req, res) {
 res.render("secret");
 });
 // ====================================
@@ -52,6 +54,33 @@ app.post("/register", function(req, res){
    });   
 });
 
+// LOGIN ROUTES
+// render login form
+app.get("/login", function(req, res){
+    res.render("login");
+});
+
+//LOGIN LOGIC
+// MIDDLEWARE
+app.post("/login", passport.authenticate("local",{
+    successRedirect: "/secret",
+    failureRedirect: "/login",
+}) ,function(req, res) {
+    
+});
+// LOGOUT ROUTES
+app.get("/logout", function(req, res) {
+   req.logout();
+   res.redirect("/");
+})
+
+// middleware creation
+function isLoggedIn(req, res, next) {
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+}
 
 app.listen(8080, function() {
     console.log('App listening on port 8080!');
